@@ -7,6 +7,14 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
+
+// 障碍物类， 将左右两个障碍物封装成一个障碍物整体(Barriers)， 
+// 目的是让外部可以方便生成障碍物整体、
+// 并且构造函数中可以直接传入障碍物间隙(gap)与与气球距离(distance)。
+// 封装后的Barriers类对外提供gap, distance, scale的get与set操作，
+// 分别对应障碍物间距、与气球距离、缩放。
+// * 这在Unity中应该有很简便的实现方式，不必这么绕
+
 cc.Class({
 
   extends: cc.Component,

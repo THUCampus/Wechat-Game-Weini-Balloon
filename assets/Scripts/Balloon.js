@@ -8,6 +8,8 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
+// 气球遭碰撞后的行为
+
 cc.Class({
   extends: cc.Component,
   properties: {
@@ -20,8 +22,12 @@ cc.Class({
   // onLoad () {},
   start () {
     // console.log("bu!");
+
+    // 获取Logic脚本中的Logic class
     this.logicScript = this.Logic.getComponent('Logic');
   },
+
+  // 碰到其他东西时，调用gameOver()
   onCollisionEnter: function (self, other) {
     this.logicScript.gameOver();
   }

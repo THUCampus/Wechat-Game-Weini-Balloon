@@ -8,6 +8,9 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
+// 所有要方便策划调整数值或行为的函数，写于此脚本中。
+
+
 cc.Class({
   extends: cc.Component,
 
@@ -15,6 +18,7 @@ cc.Class({
     this.forwardEase = cc.easeIn(3.0);
   },
 
+  // public成员、包含多个需要方便调整的数值
   properties: {
     // foo: {
     //     // ATTRIBUTES:
