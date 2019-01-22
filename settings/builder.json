@@ -19,7 +19,7 @@
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "org.cocos2d.Balloon",
+  "packageName": "org.cocos2d.Wechat-Game-Weini-Balloon",
   "privateKey": "",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
@@ -27,7 +27,7 @@
   },
   "renderMode": "0",
   "startScene": "ae0ae33f-7c85-4db1-b4a9-78d9617d8622",
-  "title": "Balloon",
+  "title": "Wechat-Game-Weini-Balloon",
   "webOrientation": "auto",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "https://zengz16.iterator-traits.com",
@@ -36,6 +36,6 @@
     "orientation": "portrait",
     "subContext": ""
   },
-  "xxteaKey": "08d44192-b3bb-4f",
+  "xxteaKey": "58a307ba-6e19-45",
   "zipCompressJs": true
 }

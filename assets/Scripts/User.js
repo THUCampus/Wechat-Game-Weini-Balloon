@@ -89,5 +89,5 @@ const User = class {
   }
 };
 
-const user = new User()
+const user = new User();
 module.exports = user;

@@ -210,9 +210,10 @@ cc.Class({
     this.front.runAction(cc.sequence(cc.delayTime(0.5), cc.moveBy(1.5, 0, 500), moveCallBack));
     if (this.score > user.biggest_balloon) {
       user.biggest_balloon = this.score;
+      console.log(user.biggest_balloon);
     }
     if (user.login) {
-      user.moneyPlus(0); // record the new highest
+      user.moneyPlus(1); // record the new highest
     }
     console.log('game over.');
   },
