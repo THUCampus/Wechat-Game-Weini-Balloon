@@ -65,8 +65,9 @@ cc.Class({
     distance = 0.10 + currentDistance + 5.0 / 6.0 * (distance - currentDistance);
     return distance;
   },
-  getGap (currentDistance) {
-    return (1.7 - 0.4 * (currentDistance - 0.7));
+  getGap (size) {
+    // return (1.7 - 0.4 * (currentDistance - 0.7));
+    return 1 + 1 / (1.0070245 * Math.exp(0.007 * size));
   },
   radiusToScoreScale (radius) {
     return 1 + 5 * (radius - 1) / 2;

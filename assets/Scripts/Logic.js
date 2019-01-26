@@ -23,6 +23,7 @@ cc.Class({
     this.listeningTouch = false;
     this.score = 1; // 1m originally
     this.shownScore = 1;
+    this.size = 1; // 1 unit originally
   },
 
   // public成员，是为了获取到游戏中其他素材、物件，需在IDE中拖弋物件来给入
@@ -85,7 +86,7 @@ cc.Class({
     
     // 初始化
     this.configs = this.node.getComponent('LogicConfigs');
-    this.barriers = this.createBarriers(this.front, 177 * 1.7, this.currentDistance * this.configs.barrierInterval);
+    this.barriers = this.createBarriers(this.front, this.configs.gapBase * this.configs.getGap(this.size), this.currentDistance * this.configs.barrierInterval);
     this.previousBarriers = {
       root: new cc.Node()
     };
@@ -136,7 +137,7 @@ cc.Class({
     // this.forwardAct.easing(cc.easeIn(3.0));
     
     // 此时必须先创建下一关的障碍物，让它也一起移动，进入到屏幕中，留意创建的y轴位置是(this.currentDistance + 1) * this.configs.barrierInterval
-    this.nextBarriers = this.createBarriers(this.front, this.configs.getGap(this.currentDistance) * this.configs.gapBase, (this.currentDistance + 1) * this.configs.barrierInterval / this.balloon.scale);
+    this.nextBarriers = this.createBarriers(this.front, this.configs.getGap(this.size) * this.configs.gapBase, (this.currentDistance + 1) * this.configs.barrierInterval / this.balloon.scale);
     
     // 缩放动画，移动完后要缩放，也就是把摄像头拉远的感觉，使气球看起来又变成上一关进关时的大小
     this.scaleAct = cc.scaleBy(this.configs.scaleDuration, 1 / this.balloon.scale);
@@ -172,6 +173,7 @@ cc.Class({
     this.previousBarriers.pair.runAction(cc.moveBy(this.configs.forwardDuration, cc.p(0, -forwardDistance * this.configs.barrierInterval / this.previousBarriers.root.scale)));
 
     this.score = this.shownScore;
+    this.size *= this.balloon.scale;
 
     this.windBlowSound.getComponent('cc.AudioSource').play();
   },
