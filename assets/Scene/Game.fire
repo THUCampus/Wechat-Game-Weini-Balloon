@@ -2365,7 +2365,7 @@
       "width": 750,
       "height": 1334
     },
-    "_fitWidth": true,
-    "_fitHeight": false
+    "_fitWidth": false,
+    "_fitHeight": true
   }
 ]

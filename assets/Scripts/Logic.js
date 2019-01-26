@@ -131,12 +131,12 @@ cc.Class({
     let forwardDistance = this.configs.getForwardDistance(radius, this.currentDistance);
     
     // 前进动画，实际上是让障碍物和背景往下移动
-    this.forwardAct = cc.moveBy(this.configs.forwardDuration, cc.p(0, -forwardDistance * this.configs.barrierInterval));
+    this.forwardAct = cc.moveBy(this.configs.forwardDuration, cc.p(0, -forwardDistance * this.configs.barrierInterval / this.balloon.scale));
     
     // this.forwardAct.easing(cc.easeIn(3.0));
     
     // 此时必须先创建下一关的障碍物，让它也一起移动，进入到屏幕中，留意创建的y轴位置是(this.currentDistance + 1) * this.configs.barrierInterval
-    this.nextBarriers = this.createBarriers(this.front, this.configs.getGap(this.currentDistance) * this.configs.gapBase, (this.currentDistance + 1) * this.configs.barrierInterval);
+    this.nextBarriers = this.createBarriers(this.front, this.configs.getGap(this.currentDistance) * this.configs.gapBase, (this.currentDistance + 1) * this.configs.barrierInterval / this.balloon.scale);
     
     // 缩放动画，移动完后要缩放，也就是把摄像头拉远的感觉，使气球看起来又变成上一关进关时的大小
     this.scaleAct = cc.scaleBy(this.configs.scaleDuration, 1 / this.balloon.scale);
@@ -156,6 +156,7 @@ cc.Class({
       // 移动完后要对众多物件执行缩放动画
       this.barriers.root.runAction(cc.sequence(cc.scaleBy(this.configs.scaleDuration, 1 / this.balloon.scale), scaleActCallback));
       this.nextBarriers.root.runAction(cc.scaleBy(this.configs.scaleDuration, 1 / this.balloon.scale));
+      this.previousBarriers.root.runAction(cc.scaleBy(this.configs.scaleDuration, 1 / this.balloon.scale));
       this.balloon.runAction(cc.scaleBy(this.configs.scaleDuration, 1 / this.balloon.scale));
       this.scoreRoot.runAction(cc.scaleBy(this.configs.scaleDuration, 1 / this.balloon.scale));
       
@@ -168,6 +169,7 @@ cc.Class({
     // 对两对障碍物执行移动动画
     this.nextBarriers.pair.runAction(cc.sequence(this.forwardAct, cc.delayTime(0.1), forwardActCallback));
     this.barriers.pair.runAction(cc.moveBy(this.configs.forwardDuration, cc.p(0, -forwardDistance * this.configs.barrierInterval)));
+    this.previousBarriers.pair.runAction(cc.moveBy(this.configs.forwardDuration, cc.p(0, -forwardDistance * this.configs.barrierInterval / this.previousBarriers.root.scale)));
 
     this.score = this.shownScore;
 
@@ -199,6 +201,9 @@ cc.Class({
     this.front.stopAllActions();
     this.nextBarriers.pair.stopAllActions();
     this.barriers.pair.stopAllActions();
+    if (this.previousBarriers.pair) {
+      this.previousBarriers.pair.stopAllActions();
+    }
     let that = this;
     let moveCallBack = cc.callFunc(function (target) {
       that.UI.active = true;
@@ -207,7 +212,11 @@ cc.Class({
       that.biggestLabel.getComponent('cc.Label').string = user.biggest_balloon + ' m';
     });
     // this.UI.runAction(cc.sequence(cc.delayTime(2), moveCallBack));
-    this.front.runAction(cc.sequence(cc.delayTime(0.5), cc.moveBy(1.5, 0, 500), moveCallBack));
+    let scale = 1 / this.pooh.scale * 1.4;
+    let x = 9 * (scale - 1.4) - 100;
+    let y = 256 * (scale - 1.4) + 367;
+    // this.pooh.runAction(cc.sequence(cc.delayTime(0.5), cc.scaleBy(1.5, scale)));
+    this.front.runAction(cc.sequence(cc.delayTime(0.5), cc.spawn(cc.moveTo(1.5, x, y), cc.scaleBy(1.5, scale)), moveCallBack));
     if (this.score > user.biggest_balloon) {
       user.biggest_balloon = this.score;
       console.log(user.biggest_balloon);
